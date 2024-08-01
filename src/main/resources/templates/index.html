@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{~/css/layui.css}">
+    <title>FinalShellDecoder</title>
+</head>
+<body>
+<div class="layui-row">
+    <div class="layui-col-xs8 layui-col-xs-offset2">
+        <div class="layui-panel">
+            <h1>Final Shell Config Decoder</h1>
+            <form class="layui-form layui-form-pane" action="">
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">输入导出的FinalShell配置Json</label>
+                    <div class="layui-input-block">
+                        <textarea name="s" placeholder="请输入内容" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <button class="layui-btn" lay-submit lay-filter="sub">确认</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<script th:src="@{~/js/layui.js}"></script>
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form;
+        var layer = layui.layer;
+        var $ = layui.$;
+        form.on('submit(sub)', function (data) {
+            debugger
+            var field = data.field;
+            $.ajax({
+                url: '/decode',
+                type: 'POST',
+                contentType: 'application/json',
+                data: field.s,
+                success: function (data) {
+                    layer.alert(data, {
+                        title: '解密结果'
+                    });
+                }
+            });
+            return false;
+        });
+    });
+</script>
+</html>

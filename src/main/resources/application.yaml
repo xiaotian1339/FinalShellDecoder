@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: finalShellDecoder
+  mvc:
+    servlet:
+      load-on-startup: 1
+  thymeleaf:
+    cache: false
+    prefix: file:src/main/resources/templates/
+server:
+  port: 10606
