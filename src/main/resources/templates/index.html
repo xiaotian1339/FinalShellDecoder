@@ -27,6 +27,29 @@
         </div>
     </div>
 </div>
+
+<!--激活码-->
+<div class="layui-row">
+    <div class="layui-col-xs8 layui-col-xs-offset2">
+        <div class="layui-panel">
+            <h1>Final Shell Active Code Generator</h1>
+            <form class="layui-form layui-form-pane" action="">
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">输入机器码</label>
+                    <div class="layui-input-block">
+                        <textarea name="machineCode" placeholder="请输入内容" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <button class="layui-btn" lay-submit lay-filter="generateActiveCode">确认</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 </body>
 <script th:src="@{~/js/layui.js}"></script>
 <script>
@@ -45,6 +68,27 @@
                 success: function (data) {
                     layer.alert(data, {
                         title: '解密结果'
+                    });
+                }
+            });
+            return false;
+        });
+        // generateActiveCode
+        form.on('submit(generateActiveCode)', function (data) {
+            debugger
+            var field = data.field;
+            $.ajax({
+                url: '/generateActiveCode',
+                type: 'POST',
+                contentType: 'application/json',
+                data: field.machineCode,
+                success: function (data) {
+                    let obj = JSON.parse(data)
+                    let HTML = '<pre>' + JSON.stringify(obj, null, 4) + '</pre>'
+                    layer.open( {
+                        type: 1,
+                        title: '激活码',
+                        content: HTML
                     });
                 }
             });

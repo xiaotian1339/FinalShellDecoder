@@ -1,7 +1,9 @@
 package com.godwin.finalshellcreak.controller;
 
+import com.alibaba.fastjson2.JSON;
 import com.godwin.finalshellcreak.pojo.FinalShellConfig;
 import com.godwin.finalshellcreak.service.DecoderService;
+import com.godwin.finalshellcreak.util.FinalShellUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +31,12 @@ public class RootController {
             e.printStackTrace();
             return "解码失败";
         }
+    }
+
+    @PostMapping("generateActiveCode")
+    @ResponseBody
+    public String generateActiveCode(@RequestBody String code) {
+        return JSON.toJSONString(FinalShellUtil.getActiveCode(code));
     }
 
 
